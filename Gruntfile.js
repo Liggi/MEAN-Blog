@@ -37,6 +37,7 @@ module.exports = function(grunt) {
           'src/javascripts/vendor/angular-route.js',
           'src/javascripts/vendor/angular-resource.js',
           'src/javascripts/vendor/angular-sanitize.js',
+          'src/javascripts/vendor/angular-cookies.js',
           'src/app.js',
           'src/services/*.js',
           'src/controllers/*.js'
@@ -52,6 +53,7 @@ module.exports = function(grunt) {
             'src/javascripts/vendor/angular-route.js',
             'src/javascripts/vendor/angular-resource.js',
             'src/javascripts/vendor/angular-sanitize.js',
+            'src/javascripts/vendor/angular-cookies.js',
             'src/app.js',
             'src/services/*.js',
             'src/controllers/*.js'
