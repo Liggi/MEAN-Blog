@@ -1,0 +1,7 @@
+<div class="blog-listing">
+  <article ng-repeat="post in posts">
+    <h1>{{ post.title }}</h1>
+    <div class="content" ng-bind-html="post.content"></div>
+    <a href="/posts/{{ post.postSlug }}">Read this post!</a>
+  </article>
+</div>
