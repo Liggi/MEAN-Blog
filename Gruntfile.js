@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       scripts: {
-        files: ['src/app.js', 'src/javascripts/**/*.js'],
+        files: ['src/app.js', 'src/**/*.js', 'src/javascripts/**/*.js'],
         tasks: ['concat', 'uglify'],
         options: {
           spawn: false,
@@ -33,6 +33,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
+          'src/javascripts/vendor/jquery.js',
           'src/javascripts/vendor/angular.js',
           'src/javascripts/vendor/angular-route.js',
           'src/javascripts/vendor/angular-resource.js',
@@ -40,7 +41,8 @@ module.exports = function(grunt) {
           'src/javascripts/vendor/angular-cookies.js',
           'src/app.js',
           'src/services/*.js',
-          'src/controllers/*.js'
+          'src/controllers/*.js',
+          'src/directives/*.js'
           ],
         dest: 'public/app.js',
       },
@@ -49,6 +51,7 @@ module.exports = function(grunt) {
       target: {
         files: {
           'public/app.min.js': [
+            'src/javascripts/vendor/jquery.js',
             'src/javascripts/vendor/angular.js',
             'src/javascripts/vendor/angular-route.js',
             'src/javascripts/vendor/angular-resource.js',
@@ -56,7 +59,8 @@ module.exports = function(grunt) {
             'src/javascripts/vendor/angular-cookies.js',
             'src/app.js',
             'src/services/*.js',
-            'src/controllers/*.js'
+            'src/controllers/*.js',
+            'src/directives/*.js'
           ]
         }
       }
