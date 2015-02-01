@@ -1,12 +1,16 @@
 angular.module('MyApp')
-  .controller('DashboardCtrl', ['$scope', 'Auth', function($scope, Auth) {
+  .controller('DashboardCtrl', ['$scope', '$sce', 'Auth', function($scope, $sce, Auth) {
   	var contentBlocks = [
   		{
-  			blockTemplate: "views/content-blocks/standard-content.html",
-  			content: "<p>I wanna put some HTML in here and ting, is it gonna go mental at me?</p><p>Some more</p>"
+  			type: "standardContent",
+  			content: $sce.trustAsHtml("<p>I wanna put some HTML in here and ting, is it gonna go mental at me?</p><p>Some more</p>")
   		},
+      {
+        type: "standardContent",
+        content: $sce.trustAsHtml("<blockquote>Blah blah blah</blockquote>")
+      },
   		{
-  			blockTemplate: "views/content-blocks/image.html",
+  			type: "image",
   			content: "Image.jpg"
   		}
   	];

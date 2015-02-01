@@ -12019,16 +12019,35 @@ angular.module('ngCookies', ['ng']).
   			redirectTo: '/'
   		})
   }]);;angular.module('MyApp')
-  .directive('contentItem', function() {
+  .directive('contentItem', ['$http', '$compile', '$templateCache', function($http, $compile, $templateCache) {
+    var getTemplate = function(contentType) {
+      var templateLoader,
+          baseUrl = "/views/content-blocks/",
+          templateMap = {
+            standardContent: "standard-content.html",
+            imageFloatLeft: "image-float-left.html",
+            imageFloatRight: "image-float-right.html",
+            image: "image.html"
+          };
+
+      var templateUrl = baseUrl + templateMap[contentType];
+      templateLoader = $http.get(templateUrl, {cache: $templateCache});
+
+      return templateLoader;
+    }
+
     return { 
-      restrict: 'AE',
-      replace: true,
-      template: "<p class='gangster-shit'></p>",
       link: function(scope, element, attrs) {
-        $(element).text(attrs.type);
+        var loader = getTemplate(scope.item.type);
+
+         var promise = loader.success(function(html) {
+             element.html(html);
+         }).then(function (response) {
+             element.replaceWith($compile(element.html())(scope));
+        });
       }
     };
-  });;angular.module('MyApp')
+  }]);;angular.module('MyApp')
   .factory('Auth', ['$http', '$location', '$rootScope', '$cookieStore',
     function($http, $location, $rootScope, $cookieStore) {
       $rootScope.currentUser = $cookieStore.get('user');
@@ -12058,14 +12077,18 @@ angular.module('ngCookies', ['ng']).
   .factory('Post', ['$resource', function($resource) {
     return $resource('/api/posts/:postSlug');
   }]);;angular.module('MyApp')
-  .controller('DashboardCtrl', ['$scope', 'Auth', function($scope, Auth) {
+  .controller('DashboardCtrl', ['$scope', '$sce', 'Auth', function($scope, $sce, Auth) {
   	var contentBlocks = [
   		{
-  			blockTemplate: "views/content-blocks/standard-content.html",
-  			content: "<p>I wanna put some HTML in here and ting, is it gonna go mental at me?</p><p>Some more</p>"
+  			type: "standardContent",
+  			content: $sce.trustAsHtml("<p>I wanna put some HTML in here and ting, is it gonna go mental at me?</p><p>Some more</p>")
   		},
+      {
+        type: "standardContent",
+        content: $sce.trustAsHtml("<blockquote>Blah blah blah</blockquote>")
+      },
   		{
-  			blockTemplate: "views/content-blocks/image.html",
+  			type: "image",
   			content: "Image.jpg"
   		}
   	];
