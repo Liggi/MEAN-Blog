@@ -12048,6 +12048,15 @@ angular.module('ngCookies', ['ng']).
       }
     };
   }]);;angular.module('MyApp')
+  .directive('rawHtml', ['$http', function($http) {
+    return { 
+      link: function(scope, element, attrs) {
+        attrs.$observe('html', function(html) {
+          $(element).replaceWith(html);
+        });
+      }
+    };
+  }]);;angular.module('MyApp')
   .factory('Auth', ['$http', '$location', '$rootScope', '$cookieStore',
     function($http, $location, $rootScope, $cookieStore) {
       $rootScope.currentUser = $cookieStore.get('user');
